@@ -21,7 +21,7 @@ public class RestrictedSpots{
             this.Spot_Permitted_Average_Time = Spot_Permitted_Average_Time;
             this.Spot_Maximum_Capacity = Spot_Maximum_Capacity;
         }
-
+//comment
         public restrictedSpots(){
             // RestrictedSpots main_waiting_area = new RestrictedSpots();
             // main_waiting_area.Spot_ID = 1;
