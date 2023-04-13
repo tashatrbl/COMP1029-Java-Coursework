@@ -111,10 +111,4 @@ public class RestrictedSpots{
 
     }
 
-    public static class Surgery_room extends restrictedSpots {
-        
-        public Surgery_room(int spotID, String spotName, String spotArea, int spotPermittedAverageTime, int spotMaximumCapacity) {
-            super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
-        }
-    }
 }
