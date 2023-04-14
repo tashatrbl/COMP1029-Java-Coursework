@@ -1,17 +1,22 @@
-public class RestrictedSpots{
-    public static void main(String[] args) {
-        Out_main_waiting_area foo = new Out_main_waiting_area();
-        System.out.println(foo.getSpotID());
-    }
+public class RestrictedSpots {
 
-    public static class restrictedSpots{
+    restrictedSpots OPmain_waiting_area = new OP_main_waiting_area(1, "Main Waiting Area", "", 50, 30);
+    restrictedSpots OPsub_waiting_area = new OP_sub_waiting_area(2, "Sub Waiting Area", "", 50, 10);
+    restrictedSpots ICU_waiting_area = new ICU_Visiting_area(3, "ICU Waiting Area", "", 50, 5);
+    restrictedSpots IP_waiting_area = new IP_main_waiting_area(4, "Inpatient Waiting Area", "", 50, 10);
+    restrictedSpots research_center = new Research_center(5, "Research Center", "", 50, 20);
+    restrictedSpots surgery_room = new Surgery_room(6, "Surgery Room", "", 120, 5);
+    
+
+    public static class restrictedSpots {
         private int Spot_ID;
         private String Spot_Name;
         private String Spot_area;
         private double Spot_Permitted_Average_Time;
         private int Spot_Maximum_Capacity;
 
-        public restrictedSpots(int Spot_ID, String Spot_Name, String Spot_area, double Spot_Permitted_Average_Time, int Spot_Maximum_Capacity){
+        public restrictedSpots(int Spot_ID, String Spot_Name, String Spot_area, double Spot_Permitted_Average_Time,
+                int Spot_Maximum_Capacity) {
             this.Spot_ID = Spot_ID;
             this.Spot_Name = Spot_Name;
             this.Spot_area = Spot_area;
@@ -19,60 +24,81 @@ public class RestrictedSpots{
             this.Spot_Maximum_Capacity = Spot_Maximum_Capacity;
         }
 
-        public restrictedSpots(){
-            
+        public restrictedSpots() {
+
         }
 
-        public int getSpotID(){
+        public int getSpotID() {
             return Spot_ID;
         }
 
-        public String getSpotName(){
+        public String getSpotName() {
             return Spot_Name;
         }
 
-        public String getSpot_area(){
+        public String getSpot_area() {
             return Spot_area;
         }
 
-        public double getSpot_Permitted_Average_Time(){
+        public double getSpot_Permitted_Average_Time() {
             return Spot_Permitted_Average_Time;
         }
 
-        public int getSpot_Maximum_Capacity(){
+        public int getSpot_Maximum_Capacity() {
             return Spot_Maximum_Capacity;
         }
     }
 
-    public static class Out_main_waiting_area extends restrictedSpots{
-        
-        public Out_main_waiting_area(){
-            super(1,"Main waiting area", "Out Patient Waiting Area", 6.9, 10);
+    public static class OP_main_waiting_area extends restrictedSpots {
+
+        public OP_main_waiting_area(int spotID, String spotName, String spotArea, int spotPermittedAverageTime,
+                int spotMaximumCapacity) {
+            super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
+        }
+    }
+
+    // Subclass for Research Center
+    public static class Research_center extends restrictedSpots {
+
+        public Research_center(int spotID, String spotName, String spotArea, int spotPermittedAverageTime,
+                int spotMaximumCapacity) {
+            super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
         }
 
     }
 
-    public static class Sub_waiting_area extends restrictedSpots{
-        
-        public Sub_waiting_area(){
-            super(2,"Sub waiting area", "Sub Patient Waiting Area", 12, 14);
+    public static class Surgery_room extends restrictedSpots {
+
+        public Surgery_room(int spotID, String spotName, String spotArea, int spotPermittedAverageTime,
+                int spotMaximumCapacity) {
+            super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
+        }
+    }
+
+    public static class OP_sub_waiting_area extends restrictedSpots {
+
+        public OP_sub_waiting_area(int spotID, String spotName, String spotArea, int spotPermittedAverageTime,
+                int spotMaximumCapacity) {
+            super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
         }
 
     }
 
-    public static class ICU_Visiting_area extends restrictedSpots{
-        
-        public ICU_Visiting_area(){
-            super(3,"ICU_Visiting_area","Visiting Area",7,14);
-        }
+    public static class ICU_Visiting_area extends restrictedSpots {
 
+        public ICU_Visiting_area(int spotID, String spotName, String spotArea, int spotPermittedAverageTime,
+                int spotMaximumCapacity) {
+            super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
+
+        }
     }
 
-    public static class In_Main_waiting_area extends restrictedSpots{
-        
-        public In_Main_waiting_area(){
-            super(4, "In_Main_Waiting_Area", "In-Patient", 4.5, 10);
-        }
+    public static class IP_main_waiting_area extends restrictedSpots {
 
+        public IP_main_waiting_area(int spotID, String spotName, String spotArea, int spotPermittedAverageTime,
+                int spotMaximumCapacity) {
+            super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
+
+        }
     }
 }

@@ -1,23 +1,43 @@
 import java.util.Scanner;
 
-import RestrictedSpots.Out_main_waiting_area;
-
 public class StaticDistancing {
-    public static int OutPatientMainAreaCapacity = 10;
-    public static int OutPatientSubAreaCapacity = 5;
+    public static int OutPatientMainAreaCapacity = 20;
+    public static int OutPatientSubAreaCapacity = 10;
     public static int ICUAreaCapacity = 5;
     public static int InPatientMainAreaCapacity = 20;
+    public static int ResearchAreaCapacity = 40;
+    public static int SurgeryAreaCapacity = 10;
+
+    // calling the objects from RestrictedSpots class to get the details of each
+    public static RestrictedSpots.restrictedSpots OPmain_waiting_area = new RestrictedSpots.restrictedSpots(1,
+            "Main Waiting Area", "", 50, 30);
+    public static RestrictedSpots.restrictedSpots OPsub_waiting_area = new RestrictedSpots.restrictedSpots(2,
+            "Sub Waiting Area", "", 50, 10);
+    public static RestrictedSpots.restrictedSpots ICU_waiting_area = new RestrictedSpots.restrictedSpots(3,
+            "ICU Waiting Area", "", 50, 5);
+    public static RestrictedSpots.restrictedSpots IP_waiting_area = new RestrictedSpots.restrictedSpots(4,
+            "Inpatient Waiting Area", "", 50, 10);
+    public static RestrictedSpots.restrictedSpots research_center = new RestrictedSpots.restrictedSpots(5,
+            "Research Center", "", 50, 20);
+    public static RestrictedSpots.restrictedSpots surgery_room = new RestrictedSpots.restrictedSpots(6, "Surgery Room",
+            "", 120, 5);
+
+    // creating an array of all the area objects to iterate through when needed
+    public static RestrictedSpots.restrictedSpots[] restrictedSpotsArray = { OPmain_waiting_area, OPsub_waiting_area,
+            ICU_waiting_area, IP_waiting_area, research_center, surgery_room };
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+
         int user_input = 0;
 
         System.out.println("Welcome to the Hospital!");
 
         // using a while loop to keep the application running until the user exits
         while (true) {
+
+            Scanner input = new Scanner(System.in);
             System.out.println(
-                    "Select the location you would like to enter:\n1: Out-patient visitors' Main Waiting Area\n2: Out-patient Visitors' Sub-waiting Area\n3: Intensive Care Unit Visiting Area\n4: In-patient Visitors' Waiting Area\n5: Exit Application");
+                    "Select the location you would like to enter:\n1: Out-patient visitors' Main Waiting Area\n2: Out-patient Visitors' Sub-waiting Area\n3: Intensive Care Unit Visiting Area\n4: In-patient Visitors' Waiting Area\n5: Research Center\n6: Surgery Room Waiting Area\n7: Exit Application");
 
             user_input = input.nextInt();
             input.nextLine(); // consume the newline character left by nextInt()
@@ -25,38 +45,46 @@ public class StaticDistancing {
             // switch case to select the location the user wants to enter
             switch (user_input) {
                 case 1: {
-                    System.out.println("You have selected the Out-patient visitors' Main Waiting Area");
+                    System.out.println("You have selected the Out-patient visitors' Main Waiting Area.\n");
                     break;
                 }
                 case 2: {
-                    System.out.println("You have selected the Out-patient Visitors' Sub-waiting Area");
+                    System.out.println("You have selected the Out-patient Visitors' Sub-waiting Area.\n");
                     break;
                 }
                 case 3: {
-                    System.out.println("You have selected the Intensive Care Unit Visiting Area");
+                    System.out.println("You have selected the Intensive Care Unit Visiting Area.\n");
                     break;
                 }
                 case 4: {
-                    System.out.println("You have selected the In-patient Visitors' Waiting Area");
+                    System.out.println("You have selected the In-patient Visitors' Waiting Area.\n");
                     break;
                 }
                 case 5: {
-                    System.out.println("Thank you for using the application");
+                    System.out.println("You have selected the Research Center.\n");
+                    break;
+                }
+                case 6: {
+                    System.out.println("You have selected the Surgery Room Waiting Area.\n");
+                    break;
+                }
+                case 7: {
+                    System.out.println("Thank you for using the application! Please come again.\n");
                     System.exit(user_input);
                 }
             }
 
             int menuCheck = enterCheck(user_input); // calling the method to check if the user can enter the area
+            System.out.println("Hello! Menu check is: " + menuCheck);
 
             // if the value returned by enterCheck() is 1, return back to menu. else, enter
             // to area selected
-            if (menuCheck == 1) {
-                break;
-            } else {
+            if (menuCheck == 0) {
                 enterArea(user_input);
             }
+
         }
-        input.close();
+
     }
 
     // method to get the maximum capacities of each location
@@ -67,9 +95,15 @@ public class StaticDistancing {
     }
 
     // method to get the maximum time a user can wait in each location
-    public static float[] getMaxTime() {
-        float[] maxTimes = { RestrictedSpots.OutPatientMainAreaTime, RestrictedSpots.OutPatientSubAreaTime,
-                RestrictedSpots.ICUAreaTime, RestrictedSpots.InPatientMainAreaTime };
+    public static double[] getMaxTime() {
+        double[] maxTimes = new double[restrictedSpotsArray.length];
+
+        for (int i = 0; i < restrictedSpotsArray.length; i++) {
+            for (RestrictedSpots.restrictedSpots restrictedSpots2 : restrictedSpotsArray) {
+                maxTimes[i] = restrictedSpots2.getSpot_Permitted_Average_Time();
+            }
+        }
+
         return maxTimes;
     }
 
@@ -81,14 +115,13 @@ public class StaticDistancing {
         int flag = 0; // flag to check if the room has reached its maximum capacity
         int menuFlag = 0; // flag to check if the user wants to wait or not
 
-        currentCapacities.getCurrCapacity(); // getting the current capacities of each location
+        currentCapacities.setCurrCapacity(); // getting the current capacities of each location
         int[] maxCapacities = getMaxCapacity(); // getting the maximum capacities of each location
 
         // comparing values of current and maximum capacities
         for (int i = 0; i < maxCapacities.length; i++) {
             if (user_input == i + 1) {
                 if (currentCapacities.currentCapacities[i] < maxCapacities[i]) {
-                    System.out.println("You can enter the area");
                     return menuFlag;
                 } else {
                     flag = 1;
@@ -105,10 +138,9 @@ public class StaticDistancing {
                         maxCapacities[user_input - 1], getMaxTime()[user_input - 1]);
                 Scanner input = new Scanner(System.in);
                 int inputWait = input.nextInt();
-                input.nextLine();
                 input.close();
+
                 if (inputWait == 1) {
-                    System.out.println("You have entered the area.");
                     return menuFlag;
                 } else {
                     System.out.println("Returning to menu....\n");
@@ -148,42 +180,36 @@ public class StaticDistancing {
             }
         }
 
-        String contactStatus;
+        // generating the user's contact status to casual contact to default
+        String contactStatus = "Casual Contact";
 
-        if (closeContact == false) {
-            contactStatus = "Casual Contact";
-        } else {
+        if (closeContact == true) {
             contactStatus = "Close Contact";
         }
-
-        // calling the objects from RestrictedSpots class to get the details of each spot
-        RestrictedSpots.restrictedSpots outMainWaitingArea = new RestrictedSpots.restrictedSpots();
-        RestrictedSpots.restrictedSpots outSubWaitingArea = new RestrictedSpots.restrictedSpots();
-        RestrictedSpots.restrictedSpots ICUWaitingArea = new RestrictedSpots.restrictedSpots();
-        RestrictedSpots.restrictedSpots inMainWaitingArea = new RestrictedSpots.restrictedSpots();
-
-        // creating an array of objects to store the objects of each spot to iterate through and identify which one to print
-        RestrictedSpots.restrictedSpots[] restrictedSpotsArray = { outMainWaitingArea, outSubWaitingArea,
-                ICUWaitingArea, inMainWaitingArea };
 
         // using for each statement to get details of the area
         for (RestrictedSpots.restrictedSpots restrictedSpots2 : restrictedSpotsArray) {
             restrictedSpots2.getSpotID();
-            restrictedSpots2.getSpotName();
-            restrictedSpots2.getSpot_area();
-            restrictedSpots2.getSpot_Permitted_Average_Time();
-            restrictedSpots2.getSpot_Maximum_Capacity();
 
-            // compare user input to the spotID of the locations; if they are equal, print the details of the spot
+            System.out.println(restrictedSpots2.getSpotID());
+
+            // compare user input to the spotID of the locations; if they are equal, get the rest of the data
             if (user_input == restrictedSpots2.getSpotID()) {
+                restrictedSpots2.getSpotName();
+                restrictedSpots2.getSpot_area();
+                restrictedSpots2.getSpot_Permitted_Average_Time();
+                restrictedSpots2.getSpot_Maximum_Capacity();
+
+                // then print the details of the user and the area they are in
                 System.out.println("User ID: 20509430\nFull Name: Carmel Natasha Barnabas\nSelected Spot ID:"
                         + restrictedSpots2.getSpotID() + "\nSelected Spot Name: " + restrictedSpots2.getSpotName()
                         + "\nSelected Spot Area: " + restrictedSpots2.getSpot_area()
                         + "\nSelected Spot Permitted Average Time: " + restrictedSpots2.getSpot_Permitted_Average_Time()
-                        + "\nSelected Spot Maximum Capacity: " + restrictedSpots2.getSpot_Maximum_Capacity() + "\nContact Status: " + contactStatus);
+                        + "\nSelected Spot Maximum Capacity: " + restrictedSpots2.getSpot_Maximum_Capacity()
+                        + "\nContact Status: " + contactStatus);
+            break;
             }
         }
-
         input.close();
     }
 }

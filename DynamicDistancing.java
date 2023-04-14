@@ -7,7 +7,7 @@ public class DynamicDistancing {
     public int ICUCurrCapacity;
     public int IPMainAreaCurrCapacity;
 
-    public int[] getCurrCapacity() {
+    public void setCurrCapacity() {
         int[] maxCapacities = StaticDistancing.getMaxCapacity();
         currentCapacities = new int[maxCapacities.length];
 
@@ -31,7 +31,6 @@ public class DynamicDistancing {
             }
             currentCapacities[i] = capacity;
         }
-
-         return currentCapacities;
     }
+
 }
