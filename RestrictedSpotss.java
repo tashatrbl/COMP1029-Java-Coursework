@@ -24,6 +24,11 @@ public class RestrictedSpotss {
                     System.out.println("Timer Started!");
                     timeRemaining = researchCenter.getSpotPermittedAverageTime();
                     while (timeRemaining > 0) {
+                        System.out.print("\033[H\033[2J"); 
+                        System.out.println("Spot Name: " + researchCenter.getSpotName());
+                        System.out.println("Spot ID: " + researchCenter.getSpotID());
+                        System.out.println("Random Maximum Capacity: " + randomCapacity);
+                        System.out.println("Permitted Average Time: " + researchCenter.getSpotPermittedAverageTime());
                         System.out.println("Time remaining: " + timeRemaining + " seconds");
                         try {
                             Thread.sleep(1000); // sleep for 1 second
@@ -44,6 +49,11 @@ public class RestrictedSpotss {
                     System.out.println("Timer Started!");
                     timeRemaining = surgeryRoom.getSpotPermittedAverageTime();
                     while (timeRemaining > 0) {
+                        System.out.print("\033[H\033[2J");
+                        System.out.println("Spot Name: " + surgeryRoom.getSpotName());
+                        System.out.println("Spot ID: " + surgeryRoom.getSpotID());
+                        System.out.println("Random Maximum Capacity: " + randomCapacity);
+                        System.out.println("Permitted Average Time: " + surgeryRoom.getSpotPermittedAverageTime());
                         System.out.println("Time remaining: " + timeRemaining + " seconds");
                         try {
                             Thread.sleep(1000); // sleep for 1 second
