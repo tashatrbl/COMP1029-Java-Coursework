@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
 
 public class StaticDistancing {
 
@@ -252,14 +255,14 @@ public class StaticDistancing {
                 // checking if user waited to enter or not
                 // if waitCheck = 0, user did not wait
                 // if waitCheck = 1, user waited
-
                 if (waitCheck == 0) {
                     // this value is meant to represent the number of people, INCLUDING the user.
                     int currentCapacity = (currentCapacities[user_input - 1] + 1);
                     double area = (double) (currentCapacity / (double) max_Cap
                             * spotArea) * 10;
 
-                    System.out.println("\n\nUser ID: " + UserID +
+                    System.out.println("\n\033[H\033[2J" +
+                            "\nUser ID: " + UserID +
                             "\nFull Name: " + UserName +
                             "\nSelected Spot ID: " + restrictedSpots2.getSpotID() +
                             "\nSelected Spot Name: " + spotName +
@@ -271,7 +274,8 @@ public class StaticDistancing {
                             "\nContact Status: " + contactStatus + "\n\n");
 
                 } else {
-                    System.out.println("\n\nUser ID: " + UserID +
+                    System.out.println("\n\033[H\033[2J" +
+                            "\nUser ID: " + UserID +
                             "\nFull Name: " + UserName +
                             "\nSelected Spot ID: " + restrictedSpots2.getSpotID() +
                             "\nSelected Spot Name: " + spotName +
@@ -281,6 +285,34 @@ public class StaticDistancing {
                             "\nTotal area occupied: 100%" +
                             "\nSelected Spot Permitted Average Time: " + avg_time + " minutes" +
                             "\nContact Status: " + contactStatus + "\n\n");
+                }
+                double timeRemaining = 0;
+                timeRemaining = avg_time * 60;
+
+                JFrame myJFrame = new JFrame();
+
+                // then print the details of the user and the area they are in
+                while (timeRemaining > 0) {
+
+                    System.out.println(
+                            "\nTime remaining: " + timeRemaining + " seconds" +
+                                    "\nPress '1' to leave the room");
+                    myJFrame.addKeyListener(new KeyAdapter() {
+                        public void keyPressed(KeyEvent e) {
+                            int keyCode = e.getKeyCode();
+                            if (e.getKeyChar() == '1') {
+                                System.out.println("Exit Program");
+                                System.exit(0);
+                            }
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000); // sleep for 1 second
+                    } catch (InterruptedException e) { // Catch the error if system fails -- Print the Stack
+                        e.printStackTrace();
+                    }
+                    timeRemaining--;
+                    myJFrame.setVisible(true);
                 }
 
                 break;
