@@ -6,30 +6,8 @@ public class DynamicDistancing {
     public int OPSubAreaCurrCapacity;
     public int ICUCurrCapacity;
     public int IPMainAreaCurrCapacity;
-
-
-    // public int getCurrentCapacity(int SpotID){
-    //     for (int i = 0; i < currentCapacities.length; i++){
-    //         switch (SpotID) {
-    //             case 1:
-    //                 return OPMainAreaCurrCapacity; 
-    //             case 2:
-    //                 return OPSubAreaCurrCapacity;
-                    
-    //             case 3:
-    //                 return ICUCurrCapacity;
-                    
-    //             case 4:
-    //                 return IPMainAreaCurrCapacity;
-                    
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    //     return SpotID;
-    // }
-
-    
+    public int RCCurrCapacity;
+    public int SRCurrCapacity;
 
     public void setCurrCapacity() {
         int[] maxCapacities = StaticDistancing.getMaxCapacity();
@@ -50,6 +28,12 @@ public class DynamicDistancing {
                 case 3:
                     IPMainAreaCurrCapacity = capacity;
                     break;
+                case 4:
+                    RCCurrCapacity = capacity;
+                    break;
+                case 5:
+                    SRCurrCapacity = capacity;
+                    break;
                 default:
                     break;
             }
@@ -57,8 +41,26 @@ public class DynamicDistancing {
         }
     }
 
-    public int[] getCurrentCapacity(){
-        return currentCapacities;
-    }
+    // public int getCurrentCapacity(int SpotID) {
+    //     for (int i = 0; i < currentCapacities.length; i++) {
+    //         switch (SpotID) {
+    //             case 1:
+    //                 return OPMainAreaCurrCapacity;
+    //             case 2:
+    //                 return OPSubAreaCurrCapacity;
+    //             case 3:
+    //                 return ICUCurrCapacity;
+    //             case 4:
+    //                 return IPMainAreaCurrCapacity;
+    //             case 5:
+    //                 return RCCurrCapacity;
+    //             case 6:
+    //                 return SRCurrCapacity;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    //     return SpotID;
+    // }
 
 }

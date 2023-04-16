@@ -1,7 +1,7 @@
 public class RestrictedSpots {
 
-    restrictedSpots OPmain_waiting_area = new OP_main_waiting_area(1, "Main Waiting Area", 10, 50, 30);
-    restrictedSpots OPsub_waiting_area = new OP_sub_waiting_area(2, "Sub Waiting Area", 20, 50, 10);
+    restrictedSpots OPmain_waiting_area = new OP_main_waiting_area(1, "Main Waiting Area", 20, 50, 30);
+    restrictedSpots OPsub_waiting_area = new OP_sub_waiting_area(2, "Sub Waiting Area", 10, 50, 10);
     restrictedSpots ICU_waiting_area = new ICU_Visiting_area(3, "ICU Waiting Area", 35, 50, 5);
     restrictedSpots IP_waiting_area = new IP_main_waiting_area(4, "Inpatient Waiting Area", 50, 50, 10);
     restrictedSpots research_center = new Research_center(5, "Research Center", 10, 50, 20);
@@ -22,10 +22,6 @@ public class RestrictedSpots {
             this.Spot_area = Spot_area;
             this.Spot_Permitted_Average_Time = Spot_Permitted_Average_Time;
             this.Spot_Maximum_Capacity = Spot_Maximum_Capacity;
-        }
-
-        public restrictedSpots() {
-
         }
 
         public int getSpotID() {
