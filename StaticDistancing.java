@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
 
 public class StaticDistancing {
 
@@ -23,7 +26,7 @@ public class StaticDistancing {
     public static RestrictedSpots.restrictedSpots[] restrictedSpotsArray = { OPmain_waiting_area, OPsub_waiting_area,
             ICU_waiting_area, IP_waiting_area, research_center, surgery_room };
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
         int user_input = 0;
 
@@ -56,7 +59,7 @@ public class StaticDistancing {
                 case 4: {
                     System.out.println("You have selected the In-patient Visitors' Waiting Area.\n");
                     break;
-                }
+                }         
                 case 5: {
                     System.out.println("You have selected the Research Center.\n");
                     break;
@@ -154,7 +157,7 @@ public class StaticDistancing {
     }
 
     // function to prompt user entering the area
-    public static void enterArea(int user_input) {
+    public static void enterArea(int user_input) throws Exception{
 
         DynamicDistancing currentCapacities = new DynamicDistancing();
         currentCapacities.setCurrCapacity();
@@ -227,8 +230,15 @@ public class StaticDistancing {
                 System.out.println("Enter your Name: ");
                 String UserName = input.nextLine();
 
+                double timeRemaining =0;
+                timeRemaining = avg_time * 60;
+
+                JFrame myJFrame = new JFrame();
+
                 // then print the details of the user and the area they are in
-                System.out.println("\n\nUser ID: " + UserID +
+                while (timeRemaining > 0) {
+                System.out.println("\n\033[H\033[2J" +
+                        "\nUser ID: " + UserID +
                         "\nFull Name: " + UserName + 
                         "\nSelected Spot ID: " + restrictedSpots2.getSpotID() + 
                         "\nSelected Spot Name: " + spotName +
@@ -237,7 +247,26 @@ public class StaticDistancing {
                         "\nSelected Spot Maximum Capacity: " + restrictedSpots2.getSpot_Maximum_Capacity() +
                         "\nTotal area occupied: " + area + "%" +
                         "\nSelected Spot Permitted Average Time: " + avg_time + " minutes" +
-                        "\nContact Status: " + contactStatus + "\n\n");
+                        "\nContact Status: " + contactStatus +
+                        "\nTime remaining: " + timeRemaining + " seconds" +
+                        "\nPress '1' to leave the room");
+                        myJFrame.addKeyListener(new KeyAdapter(){
+                          public void keyPressed(KeyEvent e) {
+                            int keyCode = e.getKeyCode();
+                            if (e.getKeyChar() == '1') {
+                              System.out.println("Exit Program");
+                              System.exit(0);
+                            }
+                            }
+                        });
+                        try {
+                            Thread.sleep(1000); // sleep for 1 second
+                        } catch (InterruptedException e) { //Catch the error if system fails -- Print the Stack
+                            e.printStackTrace();
+                        }
+                        timeRemaining--;
+                        myJFrame.setVisible(true);
+                    }
                 break;
             }
         }
