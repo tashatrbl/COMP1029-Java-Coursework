@@ -1,12 +1,4 @@
-public class RestrictedSpots {
-
-    restrictedSpots OPmain_waiting_area = new OP_main_waiting_area(1, "Main Waiting Area", 20, 50, 30);
-    restrictedSpots OPsub_waiting_area = new OP_sub_waiting_area(2, "Sub Waiting Area", 10, 50, 10);
-    restrictedSpots ICU_waiting_area = new ICU_Visiting_area(3, "ICU Waiting Area", 35, 50, 5);
-    restrictedSpots IP_waiting_area = new IP_main_waiting_area(4, "Inpatient Waiting Area", 50, 50, 10);
-    restrictedSpots research_center = new Research_center(5, "Research Center", 10, 50, 20);
-    restrictedSpots surgery_room = new Surgery_room(6, "Surgery Room", 23, 120, 5);
-    
+public class RestrictedSpots {    
 
     public static class restrictedSpots {
         private int Spot_ID;
