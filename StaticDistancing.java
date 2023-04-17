@@ -8,7 +8,11 @@ public class StaticDistancing {
     static Scanner input = new Scanner(System.in);
     public static int[] store_capacity;
     public static int[] currentCapacities;
+
+    // some defaults initializations
     public static int waitCheck = 0;
+    public static int exitFlag = 0;
+    static String contactStatus = "Casual Contact";
 
     // calling the objects from RestrictedSpots class to get the details of each
     public static RestrictedSpots.restrictedSpots OPmain_waiting_area = new RestrictedSpots.restrictedSpots(1,
@@ -134,11 +138,6 @@ public class StaticDistancing {
 
         currentCapacities = currentCapacity.setCurrCapacity(user_input); // getting the current capacities of each
                                                                          // location
-
-        // for (int i = 0; i < restrictedSpotsArray.length; i++) {
-        // System.out.println("Capacity: " + currentCapacities[i]);
-        // }
-
         int[] maxCapacities = getMaxCapacity(user_input); // getting the maximum capacities of each location
 
         // comparing values of current and maximum capacities
@@ -149,15 +148,14 @@ public class StaticDistancing {
 
         }
 
-        System.out.println("menuFlag: " + menuFlag);
-
         // if the room the user has selected has reached its maximum capacity, the user
         // is asked if they want to wait
         while (menuFlag == 0) {
             if (flag == 1) {
-                System.out.printf(
-                        "The room has reached its maximum visitor count of %d visitors.\nWould you like to wait %.2f minutes for a visitor to leave?\n1: Yes\n2: No\n",
-                        maxCapacities[user_input - 1], getMaxTime(user_input)[user_input - 1]);
+                System.out.println(
+                        "The room has reached its maximum visitor count of " + maxCapacities[user_input - 1] +
+                                " visitors.\nWould you like to wait " + getMaxTime(user_input)[user_input - 1] +
+                                " minutes for a visitor to leave?\n1: Yes\n2: No");
 
                 int inputWait = input.nextInt();
 
@@ -171,7 +169,6 @@ public class StaticDistancing {
             }
         }
 
-        System.out.println("Menu flag: " + menuFlag);
         // if menuFlag = 0 -> capacity not reached
         // if menuFlag = 1 -> capacity reached, user waits
         // if menuFlag = 2 -> capacity reached, user does not wait
@@ -214,15 +211,12 @@ public class StaticDistancing {
             // if the input is less than 1 meter away, ask user to move away
             if (distArr[i] < 1) {
                 float diff = 1 - distArr[i];
-                closeContact = !closeContact;
+                closeContact = true;
                 System.out.printf(
                         "You are too close to the person to the %s of you. Please move away %.2f meters away.\n",
                         arr[i], diff);
             }
         }
-
-        // generating the user's contact status to casual contact to default
-        String contactStatus = "Casual Contact";
 
         if (closeContact == true) {
             contactStatus = "Close Contact";
@@ -240,12 +234,6 @@ public class StaticDistancing {
                 double avg_time = restrictedSpots2.getSpot_Permitted_Average_Time();
                 int max_Cap = restrictedSpots2.getSpot_Maximum_Capacity();
 
-                // int currentCapacity =
-                // CurrCap.getCurrentCapacity(restrictedSpots2.getSpotID());
-                // int maxCapacity = restrictedSpots2.getSpot_Maximum_Capacity();
-
-                // double capacity = (double) currentCapacity / maxCapacity;
-
                 System.out.println("Enter your User ID: ");
                 int UserID = input.nextInt();
                 input.nextLine();
@@ -255,69 +243,79 @@ public class StaticDistancing {
                 // checking if user waited to enter or not
                 // if waitCheck = 0, user did not wait
                 // if waitCheck = 1, user waited
-                if (waitCheck == 0) {
-                    // this value is meant to represent the number of people, INCLUDING the user.
-                    int currentCapacity = (currentCapacities[user_input - 1] + 1);
-                    double area = (double) (currentCapacity / (double) max_Cap
-                            * spotArea) * 10;
-
-                    System.out.println("\n\033[H\033[2J" +
-                            "\nUser ID: " + UserID +
-                            "\nFull Name: " + UserName +
-                            "\nSelected Spot ID: " + restrictedSpots2.getSpotID() +
-                            "\nSelected Spot Name: " + spotName +
-                            "\nSelected Spot Area: " + restrictedSpots2.getSpot_area() + "m^2" +
-                            "\nSelected Spot Current Capacity: " + currentCapacity +
-                            "/" + restrictedSpots2.getSpot_Maximum_Capacity() +
-                            "\nTotal area occupied: " + area + "%" +
-                            "\nSelected Spot Permitted Average Time: " + avg_time + " minutes" +
-                            "\nContact Status: " + contactStatus + "\n\n");
-
-                } else {
-                    System.out.println("\n\033[H\033[2J" +
-                            "\nUser ID: " + UserID +
-                            "\nFull Name: " + UserName +
-                            "\nSelected Spot ID: " + restrictedSpots2.getSpotID() +
-                            "\nSelected Spot Name: " + spotName +
-                            "\nSelected Spot Area: " + restrictedSpots2.getSpot_area() + "m^2" +
-                            "\nSelected Spot Current Capacity: " + restrictedSpots2.getSpot_Maximum_Capacity() +
-                            "/" + restrictedSpots2.getSpot_Maximum_Capacity() +
-                            "\nTotal area occupied: 100%" +
-                            "\nSelected Spot Permitted Average Time: " + avg_time + " minutes" +
-                            "\nContact Status: " + contactStatus + "\n\n");
-                }
-                double timeRemaining = 0;
-                timeRemaining = avg_time * 60;
 
                 JFrame myJFrame = new JFrame();
+                double timeRemaining;
+                timeRemaining = avg_time * 60;
 
-                // then print the details of the user and the area they are in
                 while (timeRemaining > 0) {
+                    if (waitCheck == 0) {
+                        // this value is meant to represent the number of people, INCLUDING the user.
+                        int currentCapacity = (currentCapacities[user_input - 1] + 1);
+                        double area = (double) (currentCapacity / (double) max_Cap
+                                * spotArea) * 10;
+
+                        System.out.println("\n\033[H\033[2J" +
+                                "\nUser ID: " + UserID +
+                                "\nFull Name: " + UserName +
+                                "\nSelected Spot ID: " + restrictedSpots2.getSpotID() +
+                                "\nSelected Spot Name: " + spotName +
+                                "\nSelected Spot Area: " + restrictedSpots2.getSpot_area() + "m^2" +
+                                "\nSelected Spot Current Capacity: " + currentCapacity +
+                                "/" + restrictedSpots2.getSpot_Maximum_Capacity() +
+                                "\nTotal area occupied: " + area + "%" +
+                                "\nSelected Spot Permitted Average Time: " + avg_time + " minutes" +
+                                "\nContact Status: " + contactStatus + "\n\n");
+
+                    } else {
+                        System.out.println("\n\033[H\033[2J" +
+                                "\nUser ID: " + UserID +
+                                "\nFull Name: " + UserName +
+                                "\nSelected Spot ID: " + restrictedSpots2.getSpotID() +
+                                "\nSelected Spot Name: " + spotName +
+                                "\nSelected Spot Area: " + restrictedSpots2.getSpot_area() + "m^2" +
+                                "\nSelected Spot Current Capacity: "
+                                + restrictedSpots2.getSpot_Maximum_Capacity() +
+                                "/" + restrictedSpots2.getSpot_Maximum_Capacity() +
+                                "\nTotal area occupied: 100%" +
+                                "\nSelected Spot Permitted Average Time: " + avg_time + " minutes" +
+                                "\nContact Status: " + contactStatus + "\n\n");
+                    }
+
+                    exitFlag = 0;
+
+                    myJFrame.setVisible(true);
 
                     System.out.println(
                             "\nTime remaining: " + timeRemaining + " seconds" +
                                     "\nPress '1' to leave the room");
+
                     myJFrame.addKeyListener(new KeyAdapter() {
                         public void keyPressed(KeyEvent e) {
-                            int keyCode = e.getKeyCode();
-                            if (e.getKeyChar() == '1') {
-                                System.out.println("Exit Program");
-                                System.exit(0);
+
+                            if (e.getKeyCode() == KeyEvent.VK_1) {
+                                exitFlag = 1;
                             }
                         }
                     });
+
                     try {
                         Thread.sleep(1000); // sleep for 1 second
                     } catch (InterruptedException e) { // Catch the error if system fails -- Print the Stack
                         e.printStackTrace();
                     }
+
+                    if (exitFlag == 1) {
+                        myJFrame.setVisible(false);
+                        break;
+                    }
+
                     timeRemaining--;
-                    myJFrame.setVisible(true);
                 }
 
-                break;
             }
+
+            break;
         }
-        // input.close();
     }
 }
