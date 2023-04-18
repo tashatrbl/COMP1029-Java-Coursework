@@ -3,8 +3,7 @@ import java.lang.Math;
 public class DynamicDistancing {
     public int[] currentCapacities;
 
-
-    public int[] setCurrCapacity(int user_input) {
+    public int[] getCurrCapacity(int user_input) {
         int[] maxCapacities = StaticDistancing.getMaxCapacity(user_input);
         currentCapacities = new int[maxCapacities.length];
 
@@ -16,3 +15,5 @@ public class DynamicDistancing {
     }
 
 }
+
+

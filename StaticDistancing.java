@@ -38,9 +38,8 @@ public class StaticDistancing {
 
         System.out.println("Welcome to the Hospital!");
 
-        int loop_menu = 0;
         // using a while loop to keep the application running until the user exits
-        while (loop_menu == 0) {
+        while (true) {
 
             System.out.println(
                     "Select the location you would like to enter:\n1: Out-patient visitors' Main Waiting Area\n2: Out-patient Visitors' Sub-waiting Area\n3: Intensive Care Unit Visiting Area\n4: In-patient Visitors' Waiting Area\n5: Research Center\n6: Surgery Room Waiting Area\n7: Exit Application");
@@ -105,9 +104,7 @@ public class StaticDistancing {
                 if (i + 1 == restrictedSpots2.getSpotID()) {
                     maxCapacities[i] = restrictedSpots2.getSpot_Maximum_Capacity();
                 }
-
             }
-
         }
         return maxCapacities;
     }
@@ -121,7 +118,6 @@ public class StaticDistancing {
                 if (i + 1 == restrictedSpots2.getSpotID()) {
                     maxTimes[i] = restrictedSpots2.getSpot_Permitted_Average_Time();
                 }
-
             }
         }
 
@@ -136,7 +132,7 @@ public class StaticDistancing {
         int flag = 0; // flag to check if the room has reached its maximum capacity
         int menuFlag = 0; // flag to check if the user wants to wait or not
 
-        currentCapacities = currentCapacity.setCurrCapacity(user_input); // getting the current capacities of each
+        currentCapacities = currentCapacity.getCurrCapacity(user_input); // getting the current capacities of each
                                                                          // location
         int[] maxCapacities = getMaxCapacity(user_input); // getting the maximum capacities of each location
 
