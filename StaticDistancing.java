@@ -1,3 +1,10 @@
+//Name: Adyan Dean bin Wafdi Kamil 
+//ID: 20413774
+//Name: Carmel Natasha Barnabas 
+//ID: 20509430 
+//Name: Rezmana Agung Wibawa 
+//ID: 20410045
+
 import java.util.Scanner;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -73,7 +80,7 @@ public class StaticDistancing {
                     System.out.println("You have selected the Surgery Room Waiting Area.\n");
                     break;
                 }
-                case 7: {
+                default: {
                     System.out.println("Thank you for using the application! Please come again.\n");
                     System.exit(user_input);
                 }

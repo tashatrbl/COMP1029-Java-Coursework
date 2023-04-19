@@ -1,3 +1,9 @@
+//Name: Adyan Dean bin Wafdi Kamil 
+//ID: 20413774
+//Name: Carmel Natasha Barnabas 
+//ID: 20509430 
+//Name: Rezmana Agung Wibawa 
+//ID: 20410045
 public class RestrictedSpots {    
 
     public static class restrictedSpots {
@@ -45,14 +51,13 @@ public class RestrictedSpots {
         }
     }
 
-    // Subclass for Research Center
+    
     public static class Research_center extends restrictedSpots {
 
         public Research_center(int spotID, String spotName, int spotArea, int spotPermittedAverageTime,
                 int spotMaximumCapacity) {
             super(spotID, spotName, spotArea, spotPermittedAverageTime, spotMaximumCapacity);
         }
-
     }
 
     public static class Surgery_room extends restrictedSpots {
